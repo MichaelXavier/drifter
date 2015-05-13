@@ -46,7 +46,7 @@ resolveDependencyOrderTests :: TestTree
 resolveDependencyOrderTests = testGroup "resolveDependencyOrder"
     [
       testProperty "orders by dependency" $ \(UniqueChanges cs) ->
-        let presorted = changeSequence cs
+        let presorted = changesSequence cs
         in resolveDependencyOrder presorted === presorted
     ]
 
@@ -100,12 +100,3 @@ instance Arbitrary UniqueChanges  where
     where
       uniqueNames cs = let names = map changeName cs
                        in nub names == names
-
-changeSequence :: [Change a] -> [Change a]
-changeSequence [] = []
-changeSequence (x:xs) = reverse $ snd $ foldl' go (x, []) xs
-  where
-    go :: (Change a, [Change a]) -> Change a -> (Change a, [Change a])
-    go (lastChange, xs') c =
-      let c' = c { changeDependencies = [changeName lastChange] }
-      in (c', c':xs')
