@@ -17,8 +17,7 @@ import           Test.Tasty
 import           Test.Tasty.HUnit
 import           Test.Tasty.QuickCheck
 
-import           Drifter.Graph
-import           Drifter.Types
+import           Drifter
 
 main :: IO ()
 main = defaultMain tests
