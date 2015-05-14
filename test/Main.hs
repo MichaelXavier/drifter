@@ -33,6 +33,7 @@ graphTests :: TestTree
 graphTests = testGroup "Drifter.Graph"
     [
       resolveDependencyOrderTests
+    , changesSequenceTests
     ]
 
 typesTests :: TestTree
@@ -48,6 +49,15 @@ resolveDependencyOrderTests = testGroup "resolveDependencyOrder"
         let presorted = changesSequence cs
         in resolveDependencyOrder presorted === presorted
     ]
+
+changesSequenceTests :: TestTree
+changesSequenceTests = testGroup "changesSequence"
+  [
+    testProperty "maintains length" $ \(UniqueChanges cs) ->
+      length (changesSequence cs) === length cs
+  , testProperty "maintains name ordering" $ \(UniqueChanges cs) ->
+      length (changesSequence cs) === length cs
+  ]
 
 migrateTests :: TestTree
 migrateTests = testGroup "migrate"
