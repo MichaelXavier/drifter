@@ -38,7 +38,7 @@ graphDependencies cs = mkGraph nodes (labUEdges edges)
 -- the dependencies attribute of each change.
 changesSequence :: [Change a] -> [Change a]
 changesSequence [] = []
-changesSequence (x:xs) = reverse $ snd $ foldl' go (x, []) xs
+changesSequence (x:xs) = reverse $ snd $ foldl' go (x, [x]) xs
   where go :: (Change a, [Change a]) -> Change a -> (Change a, [Change a])
         go (lastChange, xs') c =
           let c' = c { changeDependencies = [changeName lastChange] }
